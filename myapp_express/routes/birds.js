@@ -7,12 +7,26 @@ var myLogger = function (req, res, next) {
   next()
 }
 
-router.use(myLogger)
+var requestTime = function (req, res, next) {
+  //给req动态绑定属性
+  req.requestTime = Date.now()
+  console.log(req.requestTime)
+  next()
+}
 
-/* GET home page. */
+router.use(myLogger)
+router.use(requestTime)
+
+/* GET home page. 会现调用myLogger */
 router.get('/', function(req, res) {
+  console.log('home')
   res.send('birds home page')
 });
 
+router.get('/time', function(req, res){
+  var responseText = 'hello workld!<br>'
+  responseText += '<small>requested at:' + req.requestTime + '</small>'
+  res.send(responseText)
+});
 
 module.exports = router;
