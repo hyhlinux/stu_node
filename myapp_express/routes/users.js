@@ -24,6 +24,7 @@ router.get('/example/a', function(req, res){
     res.send('hello from a')
 });
 
+//链式调用
 router.get('/example/b', function (req, res, next) {
   console.log('the response will be sent by the next function ...');
   next();     //调用到hello from B!
@@ -47,5 +48,17 @@ var cb2 = function(req, res) {
 }
 
 router.get('/example/c', [cb0, cb1, cb2])
+
+//
+router.route('/book')
+  .get(function (req, res) {
+    res.send('Get a random book')
+  })
+  .post(function (req, res) {
+    res.send('Add a book')
+  })
+  .put(function (req, res) {
+    res.send('Update the book')
+  })
 
 module.exports = router;
