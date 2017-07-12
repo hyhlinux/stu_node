@@ -27,3 +27,39 @@
    run the app:
      $ DEBUG=myapp-express:* npm start
 ```
+
+
+#### router params
+```bash
+➜  ~ curl http://localhost:3000/users/2/books/3 |  python -mjson.tool
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    27  100    27    0     0   3937      0 --:--:-- --:--:-- --:--:--  4500
+{
+    "bookId": "3",
+    "userId": "2"
+}
+➜  ~
+
+Route path: /user/:userId(\d+)
+Request URL: http://localhost:3000/user/42
+req.params: {"userId": "42"}
+
+Route path: /plantae/:genus.:species
+Request URL: http://localhost:3000/plantae/Prunus.persica
+req.params: { "genus": "Prunus", "species": "persica" }
+
+Route path: /flights/:from-:to
+Request URL: http://localhost:3000/flights/LAX-SFO
+req.params: { "from": "LAX", "to": "SFO" }
+
+➜  stu_node git:(express-generator) ✗ curl http://localhost:3000/users/2-3 |  python -mjson.tool
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    21  100    21    0     0    900      0 --:--:-- --:--:-- --:--:--   913
+{
+    "from": "2",
+    "to": "3"
+}
+➜  stu_node git:(express-generator) ✗
+```
