@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var birds = require('./routes/birds');
 var html  = require('./routes/html');
 var db    = require('./routes/db');
+var gp    = require('./routes/gp');
 var app = express();
 
 // view engine setup
@@ -29,6 +30,7 @@ app.use('/users', users);
 app.use('/birds', birds);
 app.use('/html', html);
 app.use('/db', db);
+app.use('/gp', gp);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
