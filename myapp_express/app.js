@@ -9,7 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var birds = require('./routes/birds');
 var html  = require('./routes/html');
-
+var db    = require('./routes/db');
 var app = express();
 
 // view engine setup
@@ -19,9 +19,7 @@ app.set('view engine', 'pug');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(bodyParser.json()); app.use(bodyParser.urlencoded({ extended: false })); app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 //files
 app.use('/files', express.static(path.join(__dirname, 'files')))
@@ -30,6 +28,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/birds', birds);
 app.use('/html', html);
+app.use('/db', db);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

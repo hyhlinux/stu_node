@@ -20,7 +20,18 @@ router.use(requestTime)
 /* GET home page. 会现调用myLogger */
 router.get('/', function(req, res) {
   console.log('home')
-  res.send('birds home page')
+  // res.send('birds home page')
+  var data = {};
+  var err = null;
+  if (!err){
+      data = {
+      "err":err,
+      };
+      res.json(data);
+      return ;
+      console.log('here1');
+  }
+  console.log('here2');
 });
 
 router.get('/time', function(req, res){
