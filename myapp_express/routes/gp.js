@@ -6,9 +6,21 @@ var express = require('express');
 var router = express.Router();
 var gplay = require('../library/google-play-scraper');
 
+function getClientIp(req) {
+    // console.log('x-forwarded-for:', req.headers['x-forwarded-for']);
+    // console.log('connection.remoteAddress:', req.connection.remoteAddress);
+    // console.log('req.socket.remoteAddress :', req.socket.remoteAddress);
+    // console.log('req.connection.socket.remoteAddress:', req.connection.socket.remoteAddress);
+    return req.headers['x-forwarded-for'] ||
+        req.connection.remoteAddress ||
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
+}
+
 //测试中间件
 var requestTime = function (req, res, next) {
     //给req动态绑定属性
+    console.log("cli-req:", getClientIp(req));
     req.requestTime = Date.now()
     console.log(req.requestTime)
     next()
@@ -26,11 +38,12 @@ router.get('/', function(req, res){
     res.send(responseText)
 });
 
+
 router.get('/search/:q/:num', function(req, res){
     console.log('params:', req.params['q']);
     gplay.search({
         term: req.params['q'],
-        proxy:"http://192.168.9.46:1087",
+        proxy:"http://192.168.6.1:8118",
         num: req.params['num']
     }).then(console.log, console.log);
     res.send(req.params);

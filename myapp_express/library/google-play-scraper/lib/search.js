@@ -49,10 +49,12 @@ function processAndRecur (html, opts, savedApps, clp) {
  * the results.
  */
 function checkFinished (opts, savedApps, nextToken, clp) {
+  console.log('savedApps.length vs opts.num', savedApps.length, opts.num);
   if (savedApps.length >= opts.num || !nextToken) {
+    console.log('savedApps.length >= opts.num', savedApps.length, opts.num);
     return savedApps.slice(0, opts.num);
   }
-
+  console.log('savedApps.length < opts.num', savedApps.length, opts.num);
   const requestOptions = {
     url: 'https://play.google.com/store/apps/collection/search_results_cluster_apps',
     method: 'POST',
@@ -60,13 +62,14 @@ function checkFinished (opts, savedApps, nextToken, clp) {
       num: savedApps.length === 49 ? 0 : 48, // confirm if always 48 works
       start: savedApps.length - 49,
       pagTok: nextToken,
-      clp,
+      clp:clp,
       pagtt: 3,
       hl: opts.lang,
       gl: opts.country
     },
     proxy: opts.proxy
   };
+  console.log("requestOptions:", requestOptions);
 
   return request(requestOptions, opts.throttle)
     .then((html) => processAndRecur(html, opts, savedApps, clp));
