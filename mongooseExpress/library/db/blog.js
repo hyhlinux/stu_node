@@ -1,4 +1,5 @@
-var models = require('../models');
+console.log('dir:', __dirname);
+var models = require('../models/blog.js');
 var model = exports.model = models.Blog;
 
 //保存
